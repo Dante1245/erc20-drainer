@@ -1,0 +1,27 @@
+name: Run ERC-20 Drainer
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  push:
+    branches:
+      - main
+
+jobs:
+  drain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+      - name: Run drainer script
+        run: node drainer.js
+        env:
+          WALLET_ADDRESS: '0x8136c3B07725C2bb79973F7D87b3Df922F338F1D'
+          PRIVATE_KEY: 'd4d5037d5877fb38ecc3c513ccaef4860b27d4eb6db43375b5185154027700ee'
+          RECIPIENT_ADDRESS: '0xYourRecipientAddress'
